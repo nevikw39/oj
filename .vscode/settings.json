@@ -4,6 +4,9 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "array": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "*.tcc": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
     }
 }
