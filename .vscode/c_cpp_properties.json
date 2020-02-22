@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "uva",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "nevikw39"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
