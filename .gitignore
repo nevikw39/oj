@@ -1,7 +1,3 @@
-in.txt
-out.txt
-uva.cpp
-
 # Ignore all
 *
 
@@ -10,6 +6,11 @@ uva.cpp
 
 # Unignore all dirs
 !*/
+
+in.txt
+out.txt
+uva.cpp
+.vscode/
 
 # Prerequisites
 *.d
