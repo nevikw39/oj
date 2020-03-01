@@ -8,10 +8,10 @@
             "defines": [
                 "nevikw39"
             ],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/g++-7",
             "cStandard": "c11",
             "cppStandard": "c++11",
-            "intelliSenseMode": "clang-x64"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
