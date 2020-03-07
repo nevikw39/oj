@@ -8,6 +8,7 @@
         "*.tcc": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "initializer_list": "cpp"
     }
 }
