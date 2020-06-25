@@ -5,33 +5,39 @@
 #endif
 using namespace std;
 using namespace __gnu_pbds;
+int inline myabs(int x) // absolute value function based on bitwise operation, which is a little bit efficient
+{
+    return (x ^ (x >> 31)) - (x >> 31);
+}
 int main()
 {
-    cin.tie(nullptr);
     ios::sync_with_stdio(false);
-    array<int, 9> a;
-    while (cin >> a[0] >> a[1] >> a[2] >> a[3] >> a[4] >> a[5] >> a[6] >> a[7] >> a[8])
+    cin.tie(nullptr);
+    const string plus[] = {"", " + "}, minus[] = {"-", " - "}, symbols[] = {"x^8", "x^7", "x^6", "x^5", "x^4", "x^3", "x^2", "x"};
+    while (cin)
     {
-        auto itr = a.begin();
-        while (!*itr && itr != a.end())
-            itr++;
-        if (itr == a.end())
-        {
-            cout << "0\n";
-            continue;
-        }
-        int n = *itr, l = 8 - (itr - a.begin());
-        cout << (n == 1 ? "" : n == -1 ? "-" : to_string(n)) << (l == 0 ? "" : l != 1 ? "x^" + to_string(l) : "x");
-        itr++;
-        for (; itr != a.end(); itr++)
-            if (*itr)
+        array<int, 9> a;
+        for (int &i : a)
+            cin >> i;
+        if (!cin)
+        break;
+        bool flag = false;
+        for (int i = 0; i < 8; i++)
+            if (a[i])
             {
-                n = *itr;
-                l = 8 - (itr - a.begin());
-                cout << (n >= 0 ? " + " : " - ") << ((n == 1 || n == -1) && l != 0 ? "" : to_string(abs(n))) << (l == 0 ? "" : l != 1 ? "x^" + to_string(l) : "x");
+                cout << (a[i] > 0 ? plus[flag] : minus[flag]) << (myabs(a[i]) > 1 ? to_string(myabs(a[i])) : "") << symbols[i];
+                flag = true;
             }
-        if (!a[7] && a[8] == -1)
-            cout << '1';
+        if (a[8])
+        {
+            if (flag)
+                cout << (a[8] > 0 ? " + " : " - ") << myabs(a[8]);
+            else
+                cout << a[8];
+        }
+        else if (!flag)
+            cout << '0';
         cout << '\n';
     }
+    return 0;
 }

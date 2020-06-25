@@ -7,7 +7,10 @@ using namespace std;
 using namespace __gnu_pbds;
 int main()
 {
+#ifdef ONLINE_JUDGE
     cin.tie(nullptr);
     ios::sync_with_stdio(false);
+#endif
+    cout << "hello, world\n";
     return 0;
 }
