@@ -1,15 +1,12 @@
-in.txt
-out.txt
-uva.cpp
-
 # Ignore all
 *
 
 # Unignore all with extensions
 !*.*
 
-# Unignore all dirs
-!*/
+in.txt
+out.txt
+.vscode/
 
 # Prerequisites
 *.d
@@ -43,3 +40,7 @@ uva.cpp
 *.exe
 *.out
 *.app
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
