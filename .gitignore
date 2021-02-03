@@ -4,14 +4,6 @@
 # Unignore all with extensions
 !*.*
 
-# Unignore all dirs
-!*/
-
-in.txt
-out.txt
-uva.cpp
-.vscode/
-
 # Prerequisites
 *.d
 
