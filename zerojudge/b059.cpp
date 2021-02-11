@@ -1,7 +1,8 @@
 #include <iostream>
-#include <queue>
 #include <set>
+#include <queue>
 #define endl '\n'
+#pragma GCC optimize("O3")
 using namespace std;
 struct node
 {
@@ -19,9 +20,9 @@ int main()
     cout.tie(0);
     ios::sync_with_stdio(0);
     short n;
-    set<pair<short, short>> s;
     while (cin >> n)
     {
+        set<pair<short, short>> s, v;
         short min = 9999;
         while (n--)
         {
@@ -37,11 +38,13 @@ int main()
         {
             node tmp = q.front();
             q.pop();
-            if (tmp.x == dx && tmp.y == dy && min > tmp.d)
+            if (tmp.x == dx && tmp.y == dy && min > tmp.d || tmp.d == 9999)
             {
                 min = tmp.d;
                 break;
             }
+            if (v.count({tmp.x, tmp.y}))
+                continue;
             if (tmp.x + 1 < 100 && !s.count({tmp.x + 1, tmp.y}))
             {
                 if (tmp.x + 3 < 100 && tmp.y + 1 < 100 && !s.count({tmp.x + 3, tmp.y + 1}))
@@ -70,6 +73,7 @@ int main()
                 if (tmp.x + 1 < 100 && tmp.y + 3 < 100 && !s.count({tmp.x + 1, tmp.y + 3}))
                     q.push(node(tmp.x + 1, tmp.y + 3, tmp.d + 1));
             }
+            v.insert({tmp.x, tmp.y});
         }
         cout << (min != 9999 ? to_string(min) : "impossible") << '\n';
     }
