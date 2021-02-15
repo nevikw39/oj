@@ -27,19 +27,15 @@ struct _cerr
 #define ND second
 using namespace std;
 using namespace __gnu_cxx;
-using namespace __gnu_pbds;
-random_device rd;
+using namespace __gnu_pbds;random_device rd;
 mt19937 mt(rd());
 struct treap
 {
-    int key, pri, tag, size;
+    int key, pri, size;
     treap *tl, *tr;
     treap() = default;
-    treap(int k) : key(k)
+    treap(int k) : key(k), pri(mt()), size(1)
     {
-        tag = 0;
-        pri = mt();
-        size = 1;
         tl = tr = nullptr;
     }
     ~treap()
@@ -49,132 +45,69 @@ struct treap
         if (tr)
             delete tr;
     }
-};
-inline void rv(treap *t)
-{
-    if (t)
-        t->tag ^= 1;
-}
-void push(treap *t)
-{
-    if (t && t->tag)
+    inline static int sz(treap *t)
     {
-        swap(t->tl, t->tr);
-        rv(t->tl);
-        rv(t->tr);
-        t->tag = 0;
+        return t ? t->size : 0;
     }
-}
-inline int size(treap *t)
+    void pull()
+    {
+        size = sz(tl) + 1 + sz(tr);
+    }
+};
+inline int sz(treap *t)
 {
     return t ? t->size : 0;
-}
-inline void pull(treap *t)
-{
-    if (t)
-        t->size = size(t->tl) + 1 + size(t->tr);
 }
 treap *merge(treap *a, treap *b)
 {
     if (!a || !b)
         return a ?: b;
-    if (a->pri > b->pri)
+    if (a->pri < b->pri)
     {
-        push(a);
         a->tr = merge(a->tr, b);
-        pull(a);
+        a->pull();
         return a;
     }
     else
     {
-        push(b);
         b->tl = merge(a, b->tl);
-        pull(b);
+        b->pull();
         return b;
     }
 }
 void split(treap *t, int k, treap *&a, treap *&b)
 {
-    if (!k)
-    {
-        a = nullptr;
-        b = t;
-        return;
-    }
-    push(t);
-    if (size(t->tl) < k)
+    if (!t)
+        a = b = nullptr;
+    else if (t->key <= k)
     {
         a = t;
-        split(t->tr, k - size(t->tl) - 1, a->tr, b);
-        pull(a);
+        split(t->tr, k, a->tr, b);
+        a->pull();
     }
     else
     {
         b = t;
         split(t->tl, k, a, b->tl);
-        pull(b);
-    }
-}
-treap *build(int n)
-{
-    treap *root;
-    vector<treap *> v;
-    for (int i = 0; i < n; i++)
-    {
-        auto *t = new treap(i + 1);
-        root = nullptr;
-        while (v.size() && v.back()->pri < t->pri)
-        {
-            v.back()->tr = root;
-            root = v.back();
-            pull(root);
-            v.pop_back();
-        }
-        t->tl = root;
-        v.push_back(t);
-    }
-    root = nullptr;
-    while (v.size())
-    {
-        v.back()->tr = root;
-        root = v.back();
-        pull(root);
-        v.pop_back();
-    }
-    return root;
-}
-treap *rv(treap * t, int l, int r)
-{
-    treap *t1, *t2;
-    split(t, l - 1, t1, t);
-    split(t, r - l + 1, t, t2);
-    rv(t);
-    return merge(merge(t1, t), t2);
-}
-void dfs(treap *t, int &n)
-{
-    if (t)
-    {
-        push(t);
-        dfs(t->tl, n);
-        cout << t->key << (--n ? ' ' : '\n');
-        dfs(t->tr, n);
+        b->pull();
     }
 }
 int main()
 {
     nevikw39;
-    int n, m;
-    while (cin >> n >> m)
+    int n;
+    while (cin >> n)
     {
-        treap *t = build(n);
-        while (m--)
+        treap *t = nullptr;
+        while (n--)
         {
-            int p, q;
-            cin >> p >> q;
-            t = rv(t, p, q);
+            int m;
+            cin >> m;
+            treap *l, *r = nullptr;
+            split(t, m, l, r);
+            cout << (r ? r->size : 0) + 1 << '\n';
+            t = merge(merge(l, new treap(m)), r);
         }
-        dfs(t, n);
         delete t;
     }
     return 0;
