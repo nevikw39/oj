@@ -63,7 +63,7 @@ int main()
     for (const auto &i : m1)
     {
         auto itr = m2.upper_bound(p - i);
-        if (itr != m2.end())
+        if (itr != m2.begin())
             r = max(r, i + *prev(itr));
     }
     cout << r << '\n';
