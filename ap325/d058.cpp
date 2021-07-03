@@ -29,8 +29,8 @@ struct _cerr
 using namespace std;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
-template <typename T>
-using _heap = __gnu_pbds::priority_queue<T>;
+template <typename T, typename Cmp = less<T>, typename Tag = pairing_heap_tag>
+using _heap = __gnu_pbds::priority_queue<T, Cmp, Tag>;
 template <typename K, typename M = null_type>
 using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
@@ -39,30 +39,29 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 int main()
 {
     nevikw39;
-    int64_t t;
-    cin >> t;
-loop:
-    while (t--)
+    int64_t n, d, r = 0;
+    cin >> n >> d;
+    vector<int64_t> v(n);
+    for (auto &i : v)
+        cin >> i;
+    auto f = [&](int64_t m)
     {
-        int64_t n, s = 0, r = 0;
-        cin >> n;
-        vector<pair<int64_t, int64_t>> v(n);
-        for (int i = 0; i < n; i++)
-            cin >> v[i].ST;
-        for (int i = 0; i < n; i++)
-            cin >> v[i].ND;
-        sort(ALL(v), [](const auto &l, const auto &r)
-             { return l.ND < r.ND; });
-        for (const auto &i : v)
+        _heap<int64_t, greater<int64_t>> pq;
+        while (m--)
+            pq.push(0);
+        for (auto i : v)
         {
-            s += i.ST;
-            if (s > i.ND)
-            {
-                cout << "no\n";
-                goto loop;
-            }
+            i += pq.top();
+            pq.pop();
+            pq.push(i);
+            if (i > d)
+                return false;
         }
-        cout << "yes\n";
-    }
+        return true;
+    };
+    for (auto jump = n >> 1; jump; jump >>= 1)
+        while (!f(r + jump))
+            r += jump;
+    cout << r + 1 << '\n';
     return 0;
 }
