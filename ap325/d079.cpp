@@ -44,23 +44,23 @@ int64_t dp(const vector<int64_t> &v, int64_t i, int64_t j)
         return DP[i][j];
     if (j - i == 1)
         return DP[i][j] = 0;
+    if (j - i == 2)
+        return DP[i][j] = v[i] * v[i + 1] * v[j];
     int64_t y = INT64_MAX;
     for (int64_t k = i + 1; k < j; k++)
-        y = min(y, dp(v, i, k) + dp(v, k, j));
-    return DP[i][j] = y + v[j] - v[i];
+        y = min(y, dp(v, i, k) + v[i] * v[k] * v[j] + dp(v, k, j));
+    return DP[i][j] = y;
 }
 
 int main()
 {
     nevikw39;
-    int64_t n, l;
-    cin >> n >> l;
-    vector<int64_t> v(n + 2);
-    v.front() = 0;
-    for (int64_t i = 1; i <= n; i++)
-        cin >> v[i];
-    v.back() = l;
+    int64_t n;
+    cin >> n;
+    vector<int64_t> v(n + 1);
+    for (auto &i : v)
+        cin >> i;
     memset(DP, -1, sizeof(DP));
-    cout << dp(v, 0, n + 1) << '\n';
+    cout << dp(v, 0, n) << '\n';
     return 0;
 }
