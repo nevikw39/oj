@@ -36,3 +36,7 @@ Nevertheless, the version of `g++` compiler there is a bit out-dated. The `C++` 
 [https://tioj.ck.tp.edu.tw/](https://tioj.ck.tp.edu.tw/)
 
 _TIOJ_, a intriguing recursive acronym of **TIOJ INFOR Online Judge** (formerly standing for **Temporary INFOR Online Judge**), is the online judge of INFOR, a club in Chien Kuo High School. It is a modern, cozy and fast online judge above all. Futhermore, _TIOJ_ is composed of a great amount of high-quality problems. [Here](https://tioj.ck.tp.edu.tw/articles/5) is a widely-praised learning resource for those who are eager to refine and sharpen their skills of data structures and algorithms.
+
+### AP325
+
+[AP325](https://drive.google.com/drive/folders/10hZCMHH0YgsfguVZCHU7EYiG8qJE5f-m) is a tutorial written by retired CCU Prof. Bang-Ye, Wu which aims at assisting students to improve thiercapability of programming and grade of APCS _(Advanced Placement Computer Science)_. This tutorial is full of classic and well-designed problems as well as problems appearing in prevous APCS or NHSPC. They are available on [TCFSH CIRC Judge](https://judge.tcirc.tw/Problems?tag=AP325) now.
