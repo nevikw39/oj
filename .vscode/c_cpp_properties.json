@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "nevikw39",
+            "includePath": [
+                "${workspaceFolder}/ac-library/",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "nevikw39"
+            ],
+            "compilerPath": "/usr/bin/g++-7",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

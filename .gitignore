@@ -40,8 +40,5 @@
 *.out
 *.app
 
-.vscode/*
-uva/in.txt
-uva/out.txt
-tmp.py
-tmp.txt
+uva/*.txt
+tmp.*
