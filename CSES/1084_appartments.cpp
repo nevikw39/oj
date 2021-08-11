@@ -51,13 +51,13 @@ int main()
         cin >> j;
     sort(ALL(a));
     sort(ALL(b));
-    for (int i = 0, j = 0; i < n && j < m;)
-        if (bwabs(a[i] - b[j]) <= k)
-            ++r, ++i, ++j;
-        else if (a[i] < b[j])
-            ++i;
+    for (auto itr = a.begin(), jtr = b.begin(); itr < a.end() && jtr < b.end();)
+        if (bwabs(*itr - *jtr) <= k)
+            ++r, ++itr, ++jtr;
+        else if (*itr < *jtr)
+            ++itr;
         else
-            ++j;
+            ++jtr;
     cout << r << '\n';
     return 0;
 }
