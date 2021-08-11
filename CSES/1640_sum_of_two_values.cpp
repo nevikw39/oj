@@ -33,15 +33,6 @@ using _hash = cc_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-struct node
-{
-    int64_t a, b;
-    constexpr bool operator<(const node &x) const
-    {
-        return b < x.b;
-    }
-};
-
 int main()
 {
     nevikw39;
