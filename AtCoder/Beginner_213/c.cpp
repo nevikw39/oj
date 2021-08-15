@@ -32,19 +32,21 @@ template <typename K, typename M = null_type>
 using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
-
+ 
 int main()
 {
     nevikw39;
-    _tree<pair<int, int>> t;
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
+    int h, w, n;
+    cin >> h >> w >> n;
+    _tree<int> r, c;
+    vector<pair<int, int>> v(n);
+    for (auto &i : v)
     {
-        int a;
-        cin >> a;
-        t.insert({a, i});
+        cin >> i.ST >> i.ND;
+        r.insert(i.ST);
+        c.insert(i.ND);
     }
-    cout << t.find_by_order(n - 2)->ND << '\n';
+    for (const auto &i : v)
+        cout << i.ST - (i.ST - r.order_of_key(i.ST) - 1) << ' ' << i.ND - (i.ND - c.order_of_key(i.ND) - 1) << '\n';
     return 0;
 }
