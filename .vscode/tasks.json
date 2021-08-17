@@ -5,8 +5,8 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "g++-7 build active file",
-            "command": "/usr/bin/g++-7",
+            "label": "Linux g++ build active file",
+            "command": "/usr/bin/g++",
             "args": [
                 "-g",
                 "${file}",
@@ -14,6 +14,33 @@
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-lm",
                 "-lcrypt",
+                "-std=c++14",
+                "-pipe",
+                "-Dnevikw39",
+                "-I${workspaceFolder}/ac-library/",
+                "-Wall"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Mac g++ build active file",
+            "command": "/usr/local/bin/g++-11",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-lm",
                 "-std=c++14",
                 "-pipe",
                 "-Dnevikw39",

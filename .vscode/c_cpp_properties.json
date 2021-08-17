@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "nevikw39",
+            "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/ac-library/",
                 "${workspaceFolder}/**"
@@ -9,7 +9,21 @@
             "defines": [
                 "nevikw39"
             ],
-            "compilerPath": "/usr/bin/g++-7",
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-x64"
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/ac-library/",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "nevikw39"
+            ],
+            "compilerPath": "/usr/local/bin/g++-11",
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "gcc-x64"
