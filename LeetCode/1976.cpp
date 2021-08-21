@@ -31,7 +31,7 @@ public:
         vector<long long> d(n, LLONG_MAX), r(n);
         d[0] = 0;
         r[0] = 1;
-        priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> pq;
+        std::priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> pq;
         pq.emplace(0, 0);
         while (pq.size())
         {
