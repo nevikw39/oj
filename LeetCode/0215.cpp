@@ -31,35 +31,13 @@ using _hash = gp_hash_table<K, M, F>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-mt19937 _rand((random_device())());
-
 class Solution
 {
-private:
-    int quickselect(vector<int>::iterator begin, vector<int>::iterator end, int k)
-    {
-        int n = end - begin;
-        if (n <= 1)
-            return *begin;
-        auto itr = begin, pivot = begin + (_rand() % n + n) % n; 
-        swap(*pivot, *(end - 1));
-        pivot = end - 1;
-        for (auto jtr = begin; jtr != pivot; jtr++)
-            if (*jtr < *pivot)
-                swap(*itr++, *jtr);
-        swap(*itr, *pivot);
-        if (k < itr - begin)
-            return quickselect(begin, itr, k);
-        else if (k == itr - begin)
-            return *itr;
-        else
-            return quickselect(itr + 1, end, k - (itr - begin) - 1);
-    }
-
 public:
     int findKthLargest(vector<int> &nums, int k)
     {
-        return quickselect(nums.begin(), nums.end(), nums.size() - k);
+        nth_element(nums.begin(), nums.end() - k, nums.end());
+        return *(nums.end() - k);
     }
 };
 
