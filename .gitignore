@@ -43,3 +43,4 @@
 uva/*.txt
 tmp.*
 *.dSYM
+.DS_Store

@@ -4,6 +4,7 @@
  * | | | |  __/\ V /| |   <  \ V  V / ___) \__, |
  * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/ 
  **/
+#include <atcoder/all>
 #include <bits/extc++.h>
 #ifndef nevikw39
 #define nevikw39 cin.tie(nullptr), ios::sync_with_stdio(false)
@@ -24,6 +25,7 @@ struct
 #define ST first
 #define ND second
 using namespace std;
+using namespace atcoder;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
 template <typename T, typename Cmp = less<T>, typename Tag = pairing_heap_tag>
@@ -36,5 +38,32 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 int main()
 {
     nevikw39;
+    int64_t n, m;
+    cin >> n >> m;
+    vector<int64_t> r;
+    vector<bool> v(m + 1, true);
+    while (n--)
+    {
+        int64_t a;
+        cin >> a;
+        for (int64_t i = 2; i * i <= a; i++)
+            if (!(a % i))
+            {
+                while (!(a % i))
+                    a /= i;
+                if (v[i])
+                    for (auto j = i; j <= m; j += i)
+                        v[j] = false;
+            }
+        if (a > 1 && v[a])
+            for (auto i = a; i <= m; i += a)
+                v[i] = false;
+    }
+    for (int i = 1; i <= m; i++)
+        if (v[i])
+            r.push_back(i);
+    cout << r.size() << '\n';
+    for (const auto &i : r)
+        cout << i << '\n';
     return 0;
 }

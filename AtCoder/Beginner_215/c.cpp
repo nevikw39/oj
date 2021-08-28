@@ -4,6 +4,7 @@
  * | | | |  __/\ V /| |   <  \ V  V / ___) \__, |
  * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/ 
  **/
+#include <atcoder/all>
 #include <bits/extc++.h>
 #ifndef nevikw39
 #define nevikw39 cin.tie(nullptr), ios::sync_with_stdio(false)
@@ -24,6 +25,7 @@ struct
 #define ST first
 #define ND second
 using namespace std;
+using namespace atcoder;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
 template <typename T, typename Cmp = less<T>, typename Tag = pairing_heap_tag>
@@ -36,5 +38,12 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 int main()
 {
     nevikw39;
+    string s;
+    int64_t k;
+    cin >> s >> k;
+    sort(ALL(s));
+    for (int i = 1; i < k; i++)
+        next_permutation(ALL(s));
+    cout << s << '\n';
     return 0;
 }
