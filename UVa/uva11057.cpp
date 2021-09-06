@@ -10,12 +10,6 @@
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
 #pragma GCC target("abm,bmi,bmi2,mmx,sse,sse2,sse3,ssse3,sse4,popcnt,avx,avx2,fma,tune=native")
 #pragma comment(linker, "/stack:200000000")
-struct
-{
-    template <typename T>
-    auto &operator<<(const T &x) { return *this; }
-} __cerr;
-#define cerr __cerr
 #else
 #pragma message("hello, nevikw39")
 #endif
