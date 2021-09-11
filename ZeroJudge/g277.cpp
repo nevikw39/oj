@@ -33,37 +33,28 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-vector<int64_t> a, ps;
-
-int64_t dc(int l, int r)
-{
-    if (l >= r)
-        return a[l];
-    int64_t m = l, sl, sr;
-    for (int i = l; i <= r; i++)
-        if (a[m] > a[i])
-            m = i;
-    if (l != m)
-        sl = ps[m - 1] - ps[l - 1];
-    else
-        sl = 0;
-    sr = ps[r] - ps[m];
-    if (sl > sr)
-        return dc(l, m - 1);
-    return dc(m + 1, r);
-}
-
 int main()
 {
     nevikw39;
-    int n;
+    int n, l = 1, r;
     cin >> n;
-    a.resize(n + 1);
-    ps.resize(n + 1);
+    r = n;
+    vector<int64_t> a(n + 1), ps(n + 1);
     for (int i = 1; i <= n; i++)
         cin >> a[i];
     for (int i = 1; i <= n; i++)
         ps[i] = a[i] + ps[i - 1];
-    cout << dc(1, n) << '\n';
+    while (l < r)
+    {
+        int m = l;
+        for (int i = l; i <= r; i++)
+            if (a[m] > a[i])
+                m = i;
+        if (ps[m - 1] - ps[l - 1] > ps[r] - ps[m])
+            r = m - 1;
+        else
+            l = m + 1;
+    }
+    cout << a[l] << '\n';
     return 0;
 }
