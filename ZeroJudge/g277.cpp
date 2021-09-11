@@ -40,16 +40,17 @@ int main()
     cin >> n;
     r = n;
     vector<int64_t> a(n + 1), ps(n + 1);
+    _heap<pair<int, int>, greater<>> pq;
     for (int i = 1; i <= n; i++)
-        cin >> a[i];
+        cin >> a[i], pq.push({a[i], i});
     for (int i = 1; i <= n; i++)
         ps[i] = a[i] + ps[i - 1];
     while (l < r)
     {
-        int m = l;
-        for (int i = l; i <= r; i++)
-            if (a[m] > a[i])
-                m = i;
+        while (pq.top().ND < l || pq.top().ND > r)
+            pq.pop();
+        int m = pq.top().ND;
+        pq.pop();
         if (ps[m - 1] - ps[l - 1] > ps[r] - ps[m])
             r = m - 1;
         else
