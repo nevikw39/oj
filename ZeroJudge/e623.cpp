@@ -15,5 +15,17 @@ int main()
                 brr[i] = k;
             }
     cout << arr[brr[n]] << '\n';
+    int x = 0, r = 1, item = 0;
+    while (x + r * 4 < n)
+    {
+        x += r * 4;
+        ++r;
+    }
+    while (x + r < n)
+    {
+        x += r;
+        ++item;
+    }
+    cerr << arr[item] << '\n';
     return 0;
 }
