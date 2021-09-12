@@ -16,6 +16,15 @@ case $1 in
         code "LeetCode/$2.cpp";
         code "LeetCode/$2.hpp";
         ;;
+    Rename)
+        if [ $# -lt 3 ]; then
+            echo "Syntax Error: Too Few Arguments.";
+            exit 1;
+        fi
+        cp "LeetCode/$2.cpp" "LeetCode/$3.cpp";
+        sed -i "s/$2/$3/" "LeetCode/$3.cpp";
+        cp "LeetCode/$2.hpp" "LeetCode/$3.hpp";
+        ;;
     *)
         echo "Value Error: Not supported OJ.";
         exit 1;
