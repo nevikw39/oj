@@ -8,14 +8,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef nevikw39
-#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
-#pragma GCC target("abm,bmi,bmi2,mmx,sse,sse2,sse3,ssse3,sse4,popcnt,avx,avx2,fma,tune=native")
-#pragma comment(linker, "/stack:200000000")
-#else
-#pragma message("hello, nevikw39")
-#endif
-#pragma message("GL; HF!")
 
 int *p, *rk;
 
