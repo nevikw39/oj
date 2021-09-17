@@ -23,11 +23,11 @@ int len(Node *head)
 
 Node *createList(int n)
 {
-    Node *head = malloc(sizeof(Node *)), *cur = head;
+    Node *head = malloc(sizeof(Node)), *cur = head;
     for (int i = 1; i < n; i++)
     {
         cur->number = i;
-        cur->next = malloc(sizeof(Node *));
+        cur->next = malloc(sizeof(Node));
         cur = cur->next;
     }
     cur->number = n;
@@ -48,16 +48,18 @@ void freeList(Node *head)
 
 int solveJosephus(Node **head, int step)
 {
-    Node *cur = *head, *tmp;
-    if ((*head)->next == *head)
-        return (*head)->number;
-    for (int i = 1, l = step % len(*head) - 1; i < l; i++)
+    int l = len(*head);
+    while (*head != (*head)->next)
+    {
+        for (int i = 0, k = (step % l - 2 + l) % l; i < k; i++)
+            *head = (*head)->next;
+        Node *tmp = (*head)->next;
+        (*head)->next = (*head)->next->next;
+        free(tmp);
         *head = (*head)->next;
-    tmp = (*head)->next;
-    (*head)->next = (*head)->next->next;
-    free(tmp);
-    *head = (*head)->next;
-    return solveJosephus(head, step);
+        --l;
+    }
+    return (*head)->number;
 }
 
 #endif // FUNC_H_INCLUDED
