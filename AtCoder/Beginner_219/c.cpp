@@ -50,13 +50,19 @@ int main()
          {
              auto f = [&](const char &l, const char &r)
              { return arr[l - 'a'] < arr[r - 'a']; };
-             for (auto itr = l.begin(), jtr = r.begin(); itr != l.end() && jtr != r.end(); itr++, jtr++)
+             auto itr = l.begin(), jtr = r.begin();
+             while (itr != l.end() && jtr != r.end())
              {
                  if (f(*itr, *jtr))
                      return true;
                  else if (f(*jtr, *itr))
                      return false;
+                 itr++, jtr++;
              }
+             if (itr == l.end())
+                 return true;
+             if (jtr == r.end())
+                 return false;
          });
     for (const auto &i : v)
         cout << i << '\n';
