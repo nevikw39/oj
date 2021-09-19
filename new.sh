@@ -11,7 +11,7 @@ case $1 in
         ;;
     LeetCode)
         cp LeetCode/LeetCode.cpp "LeetCode/$2.cpp";
-        sed -i "s/LeetCode/$2/" "LeetCode/$2.cpp";
+        sed -i "" "s/LeetCode/$2/" "LeetCode/$2.cpp";
         cp LeetCode/LeetCode.hpp "LeetCode/$2.hpp";
         code "LeetCode/$2.cpp";
         code "LeetCode/$2.hpp";
@@ -22,7 +22,7 @@ case $1 in
             exit 1;
         fi
         mv "LeetCode/$2.cpp" "LeetCode/$3.cpp";
-        sed -i "s/$2/$3/" "LeetCode/$3.cpp";
+        sed -i "" "s/$2/$3/" "LeetCode/$3.cpp";
         mv "LeetCode/$2.hpp" "LeetCode/$3.hpp";
         ;;
     *)
