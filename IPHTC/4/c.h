@@ -21,6 +21,7 @@ void deletion(Node **cur)
         return;
     Node *tmp = (*cur)->next;
     (*cur)->next = tmp->next;
+    (*cur)->next->prev = *cur;
     free(tmp);
 }
 
@@ -28,22 +29,15 @@ void backspace(Node **cur)
 {
     if (*cur == head)
         return;
-    Node *tmp = (*cur)->prev;
-    (*cur)->prev = tmp->prev;
+    Node *tmp = *cur;
+    tmp->prev->next = tmp->next;
+    tmp->next->prev = tmp->prev;
+    *cur = tmp->prev;
     free(tmp);
-}
-
-static inline int len()
-{
-    int l = 0;
-    for (Node *ptr = head->next; ptr != head; ptr = ptr->next)
-        ++l;
-    return l;
 }
 
 void go_left(Node **cur, int t)
 {
-    t %= len();
     while (t--)
         if (*cur != head)
             *cur = (*cur)->prev;
@@ -53,7 +47,6 @@ void go_left(Node **cur, int t)
 
 void go_right(Node **cur, int t)
 {
-    t %= len();
     while (t--)
         if (*cur != tail)
             *cur = (*cur)->next;

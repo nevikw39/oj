@@ -30,7 +30,7 @@ void show()
 
 int n, num;
 
-char buf[8], intype;
+char buf[10], intype;
 
 int main()
 {
