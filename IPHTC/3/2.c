@@ -15,19 +15,13 @@
 #endif
 #pragma message("GL; HF!")
 
-typedef union
-{
-    float f;
-    unsigned int n;
-} U;
-
 int main()
 {
-    U u;
-    while (~scanf("%f", &u.f))
+    int n;
+    while (~scanf("%f", &n))
     {
         for (int i = 31; i >= 0; i--)
-            putchar_unlocked('0' + !!(u.n & (1U << i)));
+            putchar_unlocked('0' + !!(n & (1U << i)));
         putchar_unlocked('\n');
     }
     return 0;
