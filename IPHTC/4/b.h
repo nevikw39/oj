@@ -15,12 +15,6 @@ Node *createList(int n)
 
 void freeList(Node *head)
 {
-    while (head->next != head)
-    {
-        Node *tmp = head->next;
-        head->next = tmp->next;
-        free(tmp);
-    }
     free(head);
 }
 
