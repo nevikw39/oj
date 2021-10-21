@@ -21,11 +21,11 @@
 
 typedef struct _node
 {
-    int val; //0: x, -1: y, -2: z, -3: +, -4: -, -5: *, -6: /
+    int val; // 0: x, -1: y, -2: z, -3: +, -4: -, -5: *, -6: /
     struct _node *l, *r;
 } node;
 
-const char STR[] = "xyz+-*/";
+const char STR[] = "xyz+-*/"; // -val
 
 node *build()
 {
@@ -33,13 +33,13 @@ node *build()
     n->l = n->r = NULL;
     char buf[4];
     scanf("%s", buf);
-    if (isdigit(buf[0]))
+    if (isdigit(*buf))
     {
         n->val = atoi(buf);
         return n;
     }
     for (int i = 0; i < 7; i++)
-        if (buf[0] == STR[i])
+        if (*buf == STR[i])
         {
             n->val = -i;
             if (i >= 3) // +-*/
@@ -68,8 +68,7 @@ int inorder(node *n, int arr[3])
             return arr[-n->val];
         }
     }
-    // +-*/
-    // internal nodes of expression trees must have two subtrees?
+    // +-*/, internal nodes of expression trees must have two subtrees?
     int l = inorder(n->l, arr);
     putchar_unlocked(STR[-n->val]);
     int r = inorder(n->r, arr);
