@@ -27,12 +27,12 @@ void split(treap *t, int k, treap **a, treap **b)
     else if (t->key <= k)
     {
         *a = t;
-        split(t->r, k, &(*a)->r, b);
+        split(t->r, k, &((*a)->r), b);
     }
     else
     {
         *b = t;
-        split(t->l, k, a, &(*b)->l);
+        split(t->l, k, a, &((*b)->l));
     }
 }
 
@@ -87,4 +87,9 @@ void eat_rat(Node **_, int x)
     split(root, x - 1, &a, &b);
     split(b, x, &b, &c);
     root = merge(a, merge(deleteTreap(b), c));
+}
+
+void buy_rat(Node **_, int x)
+{
+    root = insert(root, x);
 }
