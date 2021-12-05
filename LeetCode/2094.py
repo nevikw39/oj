@@ -1,5 +1,6 @@
 import itertools
 
+
 class Solution:
     def findEvenNumbers(self, digits):
         s = set()
