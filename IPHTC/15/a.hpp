@@ -17,19 +17,13 @@ BigInt stobi(string x)
     return y;
 }
 
-BigInt MASK, ONE, ZERO;
+BigInt MASK, ONE;
 BigInt getMask()
 {
     if (!MASK[0])
         for (int i = 0; i < 1000; i++)
             MASK[i] = M - 1;
     return MASK;
-}
-BigInt getZero()
-{
-    for (int i = 0; i < 1000; i++)
-        ZERO[i] = 0;
-    return ZERO;
 }
 BigInt getOne()
 {
