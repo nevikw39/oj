@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+
 class Solution:
     def firstPalindrome(self, words) -> str:
         for i in words:
