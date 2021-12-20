@@ -59,16 +59,17 @@ int main()
         if ((m -= x - v[id[i]]) < 0)
             break;
         auto t = a * (n - i) + b * f();
+        cerr << n - i << ' ' << f() << '\n';
         if (r < t)
         {
             r = t;
             s = {i, m};
         }
     }
+    for (int i = 0, idx = upper_bound(ALL(ps), s.ND) - ps.begin() - 1, mn = min(v[id[idx]] + int64_t(floor((s.ND - ps[idx]) / (idx + 1.0))), x); i <= idx; i++)
+        v[id[i]] = mn;
     for (int i = n - 1; i >= s.ST; i--)
         v[id[i]] = x;
-    for (int i = 0, idx = upper_bound(ALL(ps), s.ND) - ps.begin() - 1, mn = min(v[id[idx]] + int64_t(floor((s.ND - ps[idx]) / (idx + 1.0))), x); i < idx; i++)
-        v[id[i]] = mn;
     cout << r << '\n'
          << v[0];
     for (int i = 1; i < n; i++)
