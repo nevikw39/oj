@@ -28,12 +28,12 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
 constexpr int M = 998244353;
 
-int binexp(int64_t a, int64_t n)
+int binexp(int64_t a, int64_t n, int m = M)
 {
     int y = 1;
-    for (a %= M; n; n >>= 1, a = a * a % M)
+    for (a %= m; n; n >>= 1, a = a * a % m)
         if (n & 1)
-            y = y * a % M;
+            y = y * a % m;
     return y;
 }
 
@@ -42,6 +42,9 @@ int main()
     nevikw39;
     int64_t n, k, m;
     cin >> n >> k >> m;
-    cout << binexp(m, binexp(k, n)) << '\n';
+    if (m % M)
+        cout << binexp(m, binexp(k, n, M - 1)) << '\n';
+    else
+        cout << "0\n";
     return 0;
 }
