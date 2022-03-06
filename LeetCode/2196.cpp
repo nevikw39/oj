@@ -8,7 +8,7 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-#include "6018.hpp"
+#include "2196.hpp"
 
 int main()
 {
