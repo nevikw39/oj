@@ -9,6 +9,11 @@ case $1 in
         cp AtCoder/AtCoder.cpp "AtCoder/$2/a.cpp";
         code "AtCoder/$2/a.cpp";
         ;;
+    Codeforces)
+        mkdir "Codeforces/$2";
+        cp Codeforces/Codeforces.cpp "Codeforces/$2/a.cpp";
+        code "Codeforces/$2/a.cpp";
+        ;;
     LeetCode)
         cp LeetCode/LeetCode.cpp "LeetCode/$2.cpp";
         sed -i "" "s/LeetCode/$2/" "LeetCode/$2.cpp";
@@ -24,6 +29,7 @@ case $1 in
         mv "LeetCode/$2.cpp" "LeetCode/$3.cpp";
         sed -i "" "s/$2/$3/" "LeetCode/$3.cpp";
         mv "LeetCode/$2.hpp" "LeetCode/$3.hpp";
+        rm "LeetCode/$2";
         ;;
     *)
         echo "Value Error: Not supported OJ.";
