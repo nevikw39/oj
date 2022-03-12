@@ -31,16 +31,19 @@ int main()
     nevikw39;
     int n;
     cin >> n;
-    vector<int> a(n);
-    for (int &i : a)
-        cin >> i;
-    vector<vector<int64_t>> dp(n, vector<int64_t>(n));
-    for (int i = n - 1; i >= 0; i--)
-        for (int j = i; j < n; j++)
-            if (i >= j)
-                dp[i][j] = a[i];
-            else
-                dp[i][j] = max(-dp[i][j - 1] + a[j], a[i] - dp[i + 1][j]);
-    cout << dp.front().back() << '\n';
+    vector<int64_t> a(n + 1), ps(n + 2);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        ps[i] = ps[i - 1] + a[i];
+    }
+    vector<vector<int64_t>> dp(n + 1, vector<int64_t>(n + 1, INT64_MAX >> 2));
+    for (int i = 1; i <= n; i++)
+        dp[i][i] = 0;
+    for (int i = n; i; i--)
+        for (int j = i; j <= n; j++)
+            for (int k = i; k < j; k++)
+                dp[i][j] = min(dp[i][j], dp[i][k] + ps[j] - ps[i - 1] + dp[k + 1][j]);
+    cout << dp[1][n] << '\n';
     return 0;
 }
