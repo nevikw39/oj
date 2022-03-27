@@ -45,14 +45,15 @@ int main()
         cin >> i;
     for (int &i : c)
         cin >> i;
-    int shift = 0;
-    while (!a[shift])
-        ++shift;
-    for (int i = 0; i <= m; i++)
+    for (int i = m; i >= 0; i--)
     {
-        b[i] = c[i + shift] / a[shift];
-        for (int j = 0; j <= n; j++)
-            c[i + j] -= b[i] * a[j];
+        int x = 0;
+        for (int j = 0; j <= n && n + i >= j; j++)
+            if (n + i - j > m)
+                continue;
+            else
+                x += a[j] * b[n + i - j];
+        b[i] = (c[n + i] - x) / a[n];
     }
     for (const int &i : b)
         cout << i << ' ';
