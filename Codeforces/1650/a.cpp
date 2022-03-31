@@ -33,13 +33,8 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int main()
+void solve()
 {
-    nevikw39;
-    int t;
-    cin >> t;
-    while (t--)
-    {
         string s;
         char c;
         cin >> s >> c;
@@ -48,6 +43,14 @@ int main()
             if (s[i] == c && ~i & 1 && ~(l - i - 1) & 1)
                 flag = true;
         cout << (flag ? "yes\n" : "no\n");
-    }
+}
+
+int main()
+{
+    nevikw39;
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

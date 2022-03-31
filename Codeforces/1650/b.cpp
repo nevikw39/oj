@@ -33,19 +33,22 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int main()
+void solve()
 {
-    nevikw39;
-    int t;
-    cin >> t;
-    while (t--)
-    {
         int l, r, a;
         cin >> l >> r >> a;
         int x = r / a * a - 1;
         if (x < l)
             x = r;
         cout << max(x / a + x % a, r / a + r % a) << '\n';
-    }
+}
+
+int main()
+{
+    nevikw39;
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

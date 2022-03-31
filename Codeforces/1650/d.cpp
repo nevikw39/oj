@@ -33,13 +33,8 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int main()
+void solve()
 {
-    nevikw39;
-    int t;
-    cin >> t;
-    while (t--)
-    {
         int n;
         cin >> n;
         vector<int> a(n), v(n);
@@ -61,6 +56,14 @@ int main()
         for (const int &i : v)
             cout << i << ' ';
         cout << '\n';
-    }
+}
+
+int main()
+{
+    nevikw39;
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

@@ -33,13 +33,16 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
+void solve()
+{
+}
+
 int main()
 {
     nevikw39;
     int t;
     cin >> t;
     while (t--)
-    {
-    }
+        solve();
     return 0;
 }
