@@ -6,7 +6,7 @@
  **/
 #include <bits/extc++.h>
 #ifndef nevikw39
-#define nevikw39 cin.tie(nullptr), ios::sync_with_stdio(false)
+#define nevikw39 cin.tie(nullptr)->sync_with_stdio(false)
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
 #pragma GCC target("abm,bmi,bmi2,mmx,sse,sse2,sse3,ssse3,sse4,popcnt,avx,avx2,fma,tune=native")
 #else
@@ -19,7 +19,7 @@
 using namespace std;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
-template <typename T, typename Cmp = less<T>, typename Tag = pairing_heap_tag>
+template <typename T, typename Cmp = greater<T>, typename Tag = pairing_heap_tag>
 using _heap = __gnu_pbds::priority_queue<T, Cmp, Tag>;
 template <typename K, typename M = null_type>
 using _hash = gp_hash_table<K, M>;
