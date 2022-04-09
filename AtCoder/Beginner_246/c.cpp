@@ -4,6 +4,7 @@
  * | | | |  __/\ V /| |   <  \ V  V / ___) \__, |
  * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/
  **/
+#include <atcoder/all>
 #include <bits/extc++.h>
 #ifndef nevikw39
 #define nevikw39 cin.tie(nullptr)->sync_with_stdio(false)
@@ -24,6 +25,7 @@ struct
 #define ST first
 #define ND second
 using namespace std;
+using namespace atcoder;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
 template <typename T, typename Cmp = greater<T>, typename Tag = pairing_heap_tag>
@@ -33,17 +35,25 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-auto solve()
-{
-    return 0;
-}
-
 int main()
 {
     nevikw39;
-    int i = 0, t;
-    cin >> t;
-    while (i < t)
-        cout << "Case #" << ++i << ": " << solve() << '\n';
+    int n, k, x;
+    cin >> n >> k >> x;
+    vector<int> a(n);
+    for (int &i : a)
+    {
+        cin >> i;
+        k -= min(exchange(i, i - min(i / x, k) * x) / x, k);
+    }
+    sort(ALL(a), greater<>());
+    for (int &i : a)
+    {
+        if (k <= 0)
+            break;
+        i = 0;
+        --k;
+    }
+    cout << accumulate(ALL(a), 0LL) << '\n';
     return 0;
 }

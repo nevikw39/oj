@@ -1,9 +1,10 @@
-/**                  _ _              _____ ___
- *  _ __   _____   _(_) | ____      _|___ // _ \
+/**                  _ _              _____ ___  
+ *  _ __   _____   _(_) | ____      _|___ // _ \ 
  * | '_ \ / _ \ \ / / | |/ /\ \ /\ / / |_ \ (_) |
  * | | | |  __/\ V /| |   <  \ V  V / ___) \__, |
- * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/
+ * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/ 
  **/
+#include <atcoder/all>
 #include <bits/extc++.h>
 #ifndef nevikw39
 #define nevikw39 cin.tie(nullptr)->sync_with_stdio(false)
@@ -24,6 +25,7 @@ struct
 #define ST first
 #define ND second
 using namespace std;
+using namespace atcoder;
 using namespace __gnu_cxx;
 using namespace __gnu_pbds;
 template <typename T, typename Cmp = greater<T>, typename Tag = pairing_heap_tag>
@@ -33,17 +35,11 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-auto solve()
-{
-    return 0;
-}
-
 int main()
 {
     nevikw39;
-    int i = 0, t;
-    cin >> t;
-    while (i < t)
-        cout << "Case #" << ++i << ": " << solve() << '\n';
+    int x1, y1, x2, y2, x3, y3;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+    cout << (x1 == x2 ? x3 : x1 == x3 ? x2 : x1) << ' ' << (y1 == y2 ? y3 : y1 == y3 ? y2 : y1) << '\n';
     return 0;
 }

@@ -4,9 +4,7 @@
  * | | | |  __/\ V /| |   <  \ V  V / ___) \__, |
  * |_| |_|\___| \_/ |_|_|\_\  \_/\_/ |____/  /_/
  **/
-#include <bits/extc++.h>
 #ifndef nevikw39
-#define nevikw39 cin.tie(nullptr)->sync_with_stdio(false)
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
 #pragma GCC target("abm,bmi,bmi2,mmx,sse,sse2,sse3,ssse3,sse4,popcnt,avx,avx2,fma,tune=native")
 #pragma comment(linker, "/stack:200000000")
@@ -16,10 +14,12 @@ struct
     auto &operator<<(const T &x) { return *this; }
 } __cerr;
 #define cerr __cerr
+#define __builtin_sprintf sprintf
 #else
 #pragma message("hello, nevikw39")
 #endif
 #pragma message("GL; HF!")
+#include <bits/extc++.h>
 #define ALL(X) begin(X), end(X)
 #define ST first
 #define ND second
@@ -28,22 +28,47 @@ using namespace __gnu_cxx;
 using namespace __gnu_pbds;
 template <typename T, typename Cmp = greater<T>, typename Tag = pairing_heap_tag>
 using _heap = __gnu_pbds::priority_queue<T, Cmp, Tag>;
-template <typename K, typename M = null_type>
-using _hash = gp_hash_table<K, M>;
+template <typename K, typename M = null_type, typename F = typename detail::default_hash_fn<K>::type>
+using _hash = gp_hash_table<K, M, F>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-auto solve()
+class Solution
 {
-    return 0;
-}
+    template <class T>
+    vector<int64_t> z_algorithm(const vector<T> &v)
+    {
+        int64_t n = v.size();
+        if (!n)
+            return {};
+        vector<int64_t> z(n);
+        z[0] = 0;
+        for (int i = 1, j = 0; i < n; i++)
+        {
+            auto &k = z[i];
+            k = (j + z[j] <= i) ? 0 : min(j + z[j] - i, z[i - j]);
+            while (i + k < n && v[k] == v[i + k])
+                k++;
+            if (j + z[j] < i + z[i])
+                j = i;
+        }
+        z[0] = n;
+        return z;
+    }
 
-int main()
-{
-    nevikw39;
-    int i = 0, t;
-    cin >> t;
-    while (i < t)
-        cout << "Case #" << ++i << ": " << solve() << '\n';
-    return 0;
-}
+    vector<int64_t> z_algorithm(const string &s)
+    {
+        int n = s.size();
+        vector<int64_t> v(n);
+        for (int i = 0; i < n; i++)
+            v[i] = s[i];
+        return z_algorithm(v);
+    }
+
+public:
+    long long sumScores(string s)
+    {
+        auto x = z_algorithm(s);
+        return accumulate(ALL(x), 0LL);
+    }
+};
