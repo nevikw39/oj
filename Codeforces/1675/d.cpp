@@ -33,15 +33,13 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int cnt;
-vector<int> p, heavy, head, sz, dep, dfn;
+vector<int> p, heavy, head, sz;
 vector<vector<int>> t, decomposition;
 
 void dfs(int x)
 {
     sz[x] = 1;
     heavy[x] = -1;
-    dep[x] = x != p[x] ? dep[p[x]] + 1 : 0;
     for (const int &i : t[x])
     {
         dfs(i);
@@ -55,7 +53,6 @@ void link(int x, int h)
 {
     decomposition[h].push_back(x + 1);
     head[x] = h;
-    dfn[x] = cnt++;
     if (~heavy[x])
         link(heavy[x], h);
     for (const int &i : t[x])
@@ -73,11 +70,8 @@ void solve()
     heavy.resize(n);
     head.resize(n);
     sz.resize(n);
-    dep.resize(n);
-    dfn.resize(n);
     decomposition.clear();
     decomposition.resize(n);
-    cnt = 0;
     for (int i = 0; i < n; i++)
     {
         cin >> p[i];
