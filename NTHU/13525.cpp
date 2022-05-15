@@ -31,162 +31,192 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int n, o;
-_hash<string, int> hs;
-vector<string> v;
-vector<bool> mark;
-vector<int> ps;
-
-template <typename T>
-struct sssp // Single Source Shortest Paths
+struct node
 {
-    vector<vector<T>> g; // graph in adj matrix
-    vector<T> d;         // distance of weight
-    vector<int> p, v, s; // path parent, distance of vertices & sums of scores
-
-    sssp() : g(n, vector<T>(n)), d(n), p(n), v(n), s(n) {}
-
-    bool dijkstra(int e, int k = INT_MAX)
+    int idx, ps, d = INT_MAX, t, path, step;
+    string name;
+    bool opened = true;
+    bool static flag;
+    bool operator>(const node &x) const
     {
-        fill(ALL(d), numeric_limits<T>::max());
-        fill(ALL(p), n);
-        fill(ALL(v), 1);
-        fill(ALL(s), 0);
-
-        _heap<pair<T, int>> pq;
-        auto itr = pq.push({d[o] = 0, o});
-        vector<decltype(itr)> itrs(n);
-        itrs[o] = itr;
-
-        while (pq.size())
-        {
-            int t = pq.top().ND;
-            if (t == e)
-                return true;
-            pq.pop();
-            itrs[t] = nullptr;
-            if (v[t] == k)
-                continue;
-            for (int i = 0; i < n; i++)
-                if (i != t && !mark[i] && (d[i] > d[t] + g[t][i] || d[i] == d[t] + g[t][i] && s[i] < s[t] + ps[i] || d[i] == d[t] + g[t][i] && s[i] == s[t] + ps[i] && p[i] > t))
-                {
-                    if (itrs[i] != nullptr)
-                        pq.modify(itrs[i], {d[i] = d[t] + g[t][i], i});
-                    else
-                        itrs[i] = pq.push({d[i] = d[t] + g[t][i], i});
-                    p[i] = t;
-                    v[i] = v[t] + 1;
-                    s[i] = s[t] + ps[i];
-                }
-        }
-        return false;
-    }
-
-    void print(int e)
-    {
-        if (e == o)
-        {
-            cout << ::v[o];
-            return;
-        }
-        print(p[e]);
-        cout << " -> " << ::v[e];
+        auto p = flag ? make_pair(d, x.d) : make_pair(t, x.t);
+        return p.ST != p.ND ? p.ST > p.ND : ps != x.ps ? ps > x.ps
+                                                       : idx > x.idx;
     }
 };
+
+bool node::flag;
+
+vector<vector<int>> TIME, FLOW;
+vector<int> PS;
+node origin;
+vector<node> places;
+_hash<string, int> ht;
+
+void set_origin()
+{
+    string s;
+    cin >> s;
+    if (places[ht[s]].opened)
+    {
+        origin = places[ht[s]];
+        cout << places[ht[s]].name << " is the new origin\n";
+        return;
+    }
+    cout << "Fail to reset the origin\n";
+}
+
+void mark()
+{
+    string s;
+    cin >> s;
+    bool flag = s.front() == 'O';
+    getline(cin, s);
+    stringstream ss(s);
+    while (ss >> s)
+        if (s == origin.name && !flag)
+            cout << "Fail to close " << s << '\n';
+        else if (places[ht[s]].opened == flag)
+            cout << "Fail to " << (places[ht[s]].opened ? "open " : "close ") << s << '\n';
+        else
+            places[ht[s]].opened = flag;
+}
+
+void dijkstra(int start, int end, int k = INT_MAX)
+{
+    _heap<node> pq;
+    vector<decltype(pq)::point_iterator> itrs(places.size(), nullptr);
+    for (node &i : places)
+    {
+        i.d = i.step = INT_MAX >> 1;
+        i.t = i.ps = -INT_MAX >> 1;
+    }
+    places[start].ps = places[start].d = places[start].t = 0;
+    places[start].step = 1;
+    itrs[start] = pq.push(places[start]);
+    while (pq.size())
+    {
+        node t = pq.top();
+        pq.pop();
+        itrs[t.idx] = nullptr;
+        for (int i = 0; i < places.size(); i++)
+        {
+            if (t.idx == places[i].idx)
+                continue;
+            if (node::flag)
+            {
+                if (t.step + 1 <= k && places[i].opened && (t.d + TIME[t.idx][i] < places[i].d || t.d + TIME[t.idx][i] == places[i].d && t.ps + PS[i] >= places[i].t))
+                {
+                    places[i].d = t.d + TIME[t.idx][i];
+                    places[i].path = t.idx;
+                    places[i].step = t.step + 1;
+                    places[i].ps = t.ps + PS[i];
+                    if (itrs[i] != nullptr)
+                        pq.modify(itrs[i], places[i]);
+                    else
+                        itrs[i] = pq.push(places[i]);
+                }
+            }
+            else
+            {
+                if (t.step + 1 <= k && places[i].opened && (t.t + FLOW[t.idx][i] > places[i].t || t.t + FLOW[t.idx][i] == places[i].t && t.ps + PS[i] >= places[i].t))
+                {
+                    places[i].t = t.t + FLOW[t.idx][i];
+                    places[i].path = t.idx;
+                    places[i].step = t.step + 1;
+                    places[i].ps = t.ps + PS[i];
+                    if (itrs[i] != nullptr)
+                        pq.modify(itrs[i], places[i]);
+                    else
+                        itrs[i] = pq.push(places[i]);
+                }
+            }
+        }
+    }
+    deque<int> dq;
+    while (end != start)
+    {
+        dq.push_front(end);
+        end = places[end].path;
+    }
+    cout << (k != INT_MAX ? "Limited " : "Optimal ") << (node::flag ? "TIME" : "FLOW") << " : " << places[start].name;
+    for (const int &x : dq)
+        cout << " -> " << places[x].name;
+    cout << '\n';
+}
+
+void optimal()
+{
+    string s;
+    cin >> s;
+    node end = places[ht[s]];
+    if (!end.opened)
+    {
+        cout << "No such optimal path to " << s << '\n';
+        return;
+    }
+    cin >> s;
+    node::flag = s.front() == 'T';
+    dijkstra(origin.idx, end.idx);
+}
+
+void limited()
+{
+    string s;
+    cin >> s;
+    node end = places[ht[s]];
+    if (!end.opened)
+    {
+        cout << "No such limited path to " << s << '\n';
+        return;
+    }
+    int k;
+    cin >> s >> k;
+    node::flag = s.front() == 'T';
+    dijkstra(origin.idx, end.idx, k);
+}
 
 int main()
 {
     nevikw39;
+    int n;
     cin >> n;
-    v.resize(n);
-    mark.resize(n);
-    ps.resize(n);
-    for (auto &s : v)
+    TIME.resize(n, vector<int>(n));
+    FLOW.resize(n, vector<int>(n));
+    PS.resize(n);
+    places.resize(n);
+    for (node &i : places)
     {
-        int i, x;
-        cin >> i >> s >> x;
-        ps[hs[s] = i] = x;
+        cin >> i.idx >> i.name >> i.ps;
+        ht[i.name] = i.idx;
+        PS[i.idx] = i.ps;
     }
-    sssp<int64_t> time;
-    for (auto &i : time.g)
-        for (auto &j : i)
+    for (auto &i : TIME)
+        for (int &j : i)
             cin >> j;
-    sssp<long double> flow;
-    for (auto &i : flow.g)
-        for (auto &j : i)
+    for (auto &i : FLOW)
+        for (int &j : i)
         {
-            cin >> j;
-            j = abs(log(j));
+            long double tmp;
+            cin >> tmp;
+            j = log(tmp) * 1e6;
         }
     string s;
     while (cin >> s)
         switch (s.front())
         {
         case 'S':
-            cin >> s;
-            if (!mark[hs[s]])
-            {
-                cout << s << " is the new origin\n";
-                o = hs[s];
-            }
-            else
-                cout << "Failed to reset origin\n";
+            set_origin();
             break;
         case 'M':
-        {
-            cin >> s;
-            bool b = s.front() == 'C';
-            getline(cin, s);
-            stringstream ss(s);
-            while (ss >> s)
-                if (mark[hs[s]] != b && (!b || hs[s] != o))
-                    mark[hs[s]] = b;
-                else
-                    cout << "Failed to " << (b ? "close " : "open ") << s << '\n';
+            mark();
             break;
-        }
         case 'O':
-        {
-            cin >> s;
-            int e = hs[s];
-            cin >> s;
-            if (s.front() == 'T' && time.dijkstra(e))
-            {
-                cout << "Optimal TIME : ";
-                time.print(e);
-                cout << '\n';
-            }
-            else if (s.front() == 'F' && flow.dijkstra(e))
-            {
-                cout << "Optimal FLOW : ";
-                flow.print(e);
-                cout << '\n';
-            }
-            else
-                cout << "No such optimal path to " << v[e] << '\n';
+            optimal();
             break;
-        }
         case 'L':
-        {
-            cin >> s;
-            int e = hs[s], k;
-            cin >> s >> k;
-            if (s.front() == 'T' && time.dijkstra(e, k))
-            {
-                cout << "Limited TIME : ";
-                time.print(e);
-                cout << '\n';
-            }
-            else if (s.front() == 'F' && flow.dijkstra(e, k))
-            {
-                cout << "Limited FLOW : ";
-                flow.print(e);
-                cout << '\n';
-            }
-            else
-                cout << "No such limited path to " << v[e] << '\n';
+            limited();
             break;
-        }
         }
     cout << "Stop receiving instructions\n";
     return 0;
