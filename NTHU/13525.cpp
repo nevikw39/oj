@@ -88,7 +88,7 @@ void dijkstra(int start, int end, int k = INT_MAX)
     vector<decltype(pq)::point_iterator> itrs(places.size(), nullptr);
     for (node &i : places)
     {
-        i.d = i.step = INT_MAX >> 1;
+        i.path = i.d = i.step = INT_MAX >> 1;
         i.t = i.ps = -INT_MAX >> 1;
     }
     places[start].ps = places[start].d = places[start].t = 0;
@@ -99,36 +99,36 @@ void dijkstra(int start, int end, int k = INT_MAX)
         node t = pq.top();
         pq.pop();
         itrs[t.idx] = nullptr;
-        for (int i = 0; i < places.size(); i++)
+        for (node &i : places)
         {
-            if (t.idx == places[i].idx)
+            if (t.idx == i.idx)
                 continue;
             if (node::flag)
             {
-                if (t.step + 1 <= k && places[i].opened && (t.d + TIME[t.idx][i] < places[i].d || t.d + TIME[t.idx][i] == places[i].d && t.ps + PS[i] >= places[i].t))
+                if (t.step + 1 <= k && i.opened && (i.d > t.d + TIME[t.idx][i.idx] || i.d == t.d + TIME[t.idx][i.idx] && i.ps < t.ps + PS[i.idx] || i.d == t.d + TIME[t.idx][i.idx] && i.ps == t.ps + PS[i.idx] && i.path > t.idx))
                 {
-                    places[i].d = t.d + TIME[t.idx][i];
-                    places[i].path = t.idx;
-                    places[i].step = t.step + 1;
-                    places[i].ps = t.ps + PS[i];
-                    if (itrs[i] != nullptr)
-                        pq.modify(itrs[i], places[i]);
+                    i.d = t.d + TIME[t.idx][i.idx];
+                    i.path = t.idx;
+                    i.step = t.step + 1;
+                    i.ps = t.ps + PS[i.idx];
+                    if (itrs[i.idx] != nullptr)
+                        pq.modify(itrs[i.idx], i);
                     else
-                        itrs[i] = pq.push(places[i]);
+                        itrs[i.idx] = pq.push(i);
                 }
             }
             else
             {
-                if (t.step + 1 <= k && places[i].opened && (t.t + FLOW[t.idx][i] > places[i].t || t.t + FLOW[t.idx][i] == places[i].t && t.ps + PS[i] >= places[i].t))
+                if (t.step + 1 <= k && i.opened && (i.t < t.t + FLOW[t.idx][i.idx] || i.t == t.t + FLOW[t.idx][i.idx] && i.ps < t.ps + PS[i.idx] || i.t == t.t + FLOW[t.idx][i.idx] && i.ps == t.ps + PS[i.idx] && i.path > t.idx))
                 {
-                    places[i].t = t.t + FLOW[t.idx][i];
-                    places[i].path = t.idx;
-                    places[i].step = t.step + 1;
-                    places[i].ps = t.ps + PS[i];
-                    if (itrs[i] != nullptr)
-                        pq.modify(itrs[i], places[i]);
+                    i.t = t.t + FLOW[t.idx][i.idx];
+                    i.path = t.idx;
+                    i.step = t.step + 1;
+                    i.ps = t.ps + PS[i.idx];
+                    if (itrs[i.idx] != nullptr)
+                        pq.modify(itrs[i.idx], i);
                     else
-                        itrs[i] = pq.push(places[i]);
+                        itrs[i.idx] = pq.push(i);
                 }
             }
         }
