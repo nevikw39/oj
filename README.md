@@ -21,7 +21,7 @@ This is the repo in which I restore my poorly-written, low-quality and awful-per
 
 > Approximately 221 Accepted, ranking at 45th _(2/3, 2021)_
 
-**GreenJudge**, unexceptionally known as _GJ_ as above, is the online judge of Tai-Chuang Girls' High School, which not only has appropriate order of problems for beginners but also contains several years' problems of Regional High School Programming Contest in Tai-Chunag and Chuang-Hua. I **solved** my first problems on this judge on _5/1, 2019_, which was the first day of Reiwa Era _(㋿)_.
+**GreenJudge**, unexceptionally known as _GJ_ as above, is the online judge of Tai-Chuang Girls' High School, which not only has appropriate order of problems for beginners but also contains several years' problems of Regional High School Programming Contest in Tai-Chunag and Chuang-Hua. I **solved** my first problem on this judge on _5/1, 2019_, which was the first day of Reiwa Era _(㋿)_.
 
 Nevertheless, the version of `g++` compiler there is a bit out-dated. The `C++` standard is obsolete `C++98`, which means you cannot use `unoredered_set/map` containers, range-based `for` loop, `auto` type, initialization list, lambda function, et cetra.
 
@@ -39,7 +39,7 @@ _TIOJ_, a intriguing recursive acronym of **TIOJ INFOR Online Judge** (formerly 
 
 ### AP325
 
-[AP325](https://drive.google.com/drive/folders/10hZCMHH0YgsfguVZCHU7EYiG8qJE5f-m) is a tutorial written by retired CCU Prof. Bang-Ye, Wu which aims at assisting students to improve thiercapability of programming and grade of APCS _(Advanced Placement Computer Science)_. This tutorial is full of classic and well-designed problems as well as problems appearing in prevous APCS or NHSPC. They are available on [TCFSH CIRC Judge](https://judge.tcirc.tw/Problems?tag=AP325) now.
+[AP325](https://drive.google.com/drive/folders/10hZCMHH0YgsfguVZCHU7EYiG8qJE5f-m) is a tutorial written by retired CCU Prof. Bang-Ye, Wu which aims at assisting students to improve their capability of programming and grade of APCS _(Advanced Placement Computer Science)_. This tutorial is full of classic and well-designed problems as well as problems appearing in prevous APCS or NHSPC. They are available on [TCFSH CIRC Judge](https://judge.tcirc.tw/Problems?tag=AP325) now.
 
 ### AtCoder
 
