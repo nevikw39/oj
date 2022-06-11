@@ -1,4 +1,4 @@
-#include "6096.hpp"
+#include "2300.hpp"
 
 int main()
 {
