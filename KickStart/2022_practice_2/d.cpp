@@ -33,6 +33,7 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
+/*
 vector<int> z_algorithm(const string &x)
 {
     int n = x.length();
@@ -65,16 +66,21 @@ bool f(string &&x)
             return true;
     return false;
 }
+ */
 
 auto solve()
 {
+    const static regex r("([aeiou].*[aeiou]).*[aeiou].*\\1");
     string s;
     cin >> s;
+    return regex_search(s, r) ? "Spell!" : "Nothing.";
+ /*
     for (int i = 0, l = s.length(); i < l; i++)
         for (int j = 3; i + j <= l; j++)
             if (f(s.substr(i, j)))
                 return "Spell!";
     return "Nothing.";
+ */
 }
 
 int main()
