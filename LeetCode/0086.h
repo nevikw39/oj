@@ -14,16 +14,11 @@ struct ListNode *partition(struct ListNode *head, int x)
 {
     struct ListNode *l = NULL, **ptr1 = &head, **ptr2 = &l;
     for (struct ListNode *cur = head; cur; cur = cur->next)
-        if (cur->val < x)
-        {
-            *ptr1 = cur;
-            ptr1 = &(*ptr1)->next;
-        }
-        else
-        {
-            *ptr2 = cur;
-            ptr2 = &(*ptr2)->next;
-        }
+    {
+        struct ListNode ***indir = cur->val < x ? &ptr1 : &ptr2;
+        **indir = cur;
+        *indir = &(**indir)->next;
+    }
     *ptr1 = l;
     *ptr2 = NULL;
     return head;
