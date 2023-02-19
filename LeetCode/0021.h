@@ -12,18 +12,12 @@
 
 struct ListNode *mergeTwoLists(struct ListNode *list1, struct ListNode *list2)
 {
-    struct ListNode *head, **ptr = &head;
-    for (; list1 && list2; ptr = &(*ptr)->next)
-        if (list1->val < list2->val)
-        {
-            *ptr = list1;
-            list1 = list1->next;
-        }
-        else
-        {
-            *ptr = list2;
-            list2 = list2->next;
-        }
-    *ptr = list1 ?: list2;
+    struct ListNode *head = NULL, **ptr = &head;
+    for (struct ListNode **cur = NULL; list1 && list2; *cur = (*cur)->next, ptr = &(*ptr)->next)
+    {
+        cur = list1->val < list2->val ? &list1 : &list2;
+        *ptr = *cur;
+    }
+    *ptr = (uintptr_t) list1 | (uintptr_t) list2;
     return head;
 }
