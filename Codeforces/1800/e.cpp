@@ -51,7 +51,7 @@ void solve()
         multiset<char> a(ALL(s)), b(ALL(t));
         a.erase(a.find(s[2]));
         b.erase(b.find(t[2]));
-        cout << (a == b ? "yes\n" : "no\n");
+        cout << (a == b && s[2] == t[2] ? "yes\n" : "no\n");
     }
     else
     {
