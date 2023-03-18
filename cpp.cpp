@@ -33,8 +33,65 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
+// string solution(int N)
+// {
+//     // Implement your solution here
+//     for (int i = 26;; i--)
+//         if (N >= i && !(N % i))
+//         {
+//             string y;
+//             for (char c = 'a'; c < 'a' + i; c++)
+//                 y.append(N / i, c);
+//             return y;
+//         }
+// }
+
+void bubble_sort(int *begin, int *end)
+{
+    int cmp = 0, swaps = 0;
+    for (; begin < end; end--)
+    {
+        bool swapped = false;
+        for (int *ptr = begin + 1; ptr < end; ptr++)
+        {
+            ++cmp;
+            if (*(ptr - 1) > *ptr)
+            {
+                ++swaps;
+                iter_swap(ptr - 1, ptr);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+    printf("%d %d\n", cmp, swaps);
+}
+
+int solution(vector<int> &A, vector<int> &B)
+{
+    int n = A.size();
+    int m = B.size();
+    sort(A.begin(), A.end());
+    sort(B.begin(), B.end());
+    int i = 0;
+    for (int k = 0; k < n; k++)
+    {
+        while (i < m - 1 && B[i] < A[k])
+            i++;
+        if (A[k] == B[i])
+            return A[k];
+    }
+    return -1;
+}
+
 int main()
 {
     nevikw39;
+    // vector<int> a{6, 7, 8, 9}, b{1, 2, 6};
+    // cout << solution(a, b) << '\n';
+    int arr[] = {1, 3, 8, 3, 7};
+    bubble_sort(arr, arr + sizeof(arr) / sizeof(int));
+    // copy(ALL(arr), ostream_iterator<int>(cout, " "));
     return 0;
 }
