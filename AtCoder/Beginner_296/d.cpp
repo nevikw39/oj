@@ -10,7 +10,7 @@
 #define nevikw39 cin.tie(nullptr)->sync_with_stdio(false)
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
 #pragma GCC target("abm,bmi,bmi2,mmx,sse,sse2,sse3,ssse3,sse4,popcnt,avx,avx2,fma,tune=native")
-#pragma comment(linker, "/stack:200000000")
+#pragma comment(linker, "/stack:250000000")
 struct
 {
     template <typename T>
@@ -35,31 +35,22 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-int64_t inline ceil_div(int64_t x, int64_t y) { return (x + y - 1) / y; }
+inline int64_t ceil_div(int64_t x, int64_t y) { return (x + y - 1) / y; }
 
 int main()
 {
     nevikw39;
-    int n;
-    cin >> n;
-    vector<tuple<int, int, int>> xyp(n);
-    for (auto &[x, y, p] : xyp)
-        cin >> x >> y >> p;
-    vector<vector<int64_t>> d(n, vector<int64_t>(n));
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-        {
-            const auto &[xi, yi, pi] = xyp[i];
-            const auto &[xj, yj, pj] = xyp[j];
-            d[i][j] = ceil_div(1LL * abs(xi - xj) + abs(yi - yj), pi);
-        }
-    for (int k = 0; k < n; k++)
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                d[i][j] = min(d[i][j], max(d[i][k], d[k][j]));
-    int64_t r = INT64_MAX;
-    for (const auto &i : d)
-        r = min(r, *max_element(ALL(i)));
-    cout << r << '\n';
+    int64_t n, m, r = INT64_MAX;
+    cin >> n >> m;
+    for (int64_t i = max((int64_t)ceil(sqrt(m)) - 1000000, (int64_t)1); i < ceil(sqrt(m)) + 1000000 && i <= n; i++)
+    {
+        auto j = ceil_div(m, i);
+        if (j <= n && i * j >= m)
+            r = min(r, i * j);
+    }
+    if (r != INT64_MAX)
+        cout << r << '\n';
+    else
+        cout << "-1\n";
     return 0;
 }
