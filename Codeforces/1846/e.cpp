@@ -33,22 +33,33 @@ using _hash = gp_hash_table<K, M>;
 template <typename K, typename M = null_type, typename Cmp = less<K>, typename T = rb_tree_tag>
 using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
-constexpr int N = 1e6 + 6;
-bitset<N> bs;
+__uint128_t pow128(__uint128_t a, __uint128_t n)
+{
+    __uint128_t y = 1;
+    while (n--)
+        y *= a;
+    return y;
+}
 
 void solve()
 {
-    int n;
+    uint64_t n;
     cin >> n;
-    cout << (bs[n] ? "YES\n" : "NO\n");
+    for (__uint128_t i = 2; pow(n, 1.l / i) >= 2; i++)
+    {
+        __uint128_t k = pow(n, 1.l / i);
+        if ((pow128(k, i + 1) - 1) / (k - 1) == n)
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
+    cout << "NO\n";
 }
 
 int main()
 {
     nevikw39;
-    for (int i = 2; i < N; i++)
-        for (int64_t j = 1LL * i * i * i; (j - 1) / (i - 1) < N; j *= i)
-            bs[(j - 1) / (i - 1)] = true;
     int t;
     cin >> t;
     while (t--)
