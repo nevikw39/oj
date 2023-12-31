@@ -41,7 +41,10 @@ void solve()
     {
         int b;
         cin >> b;
-        prod *= b;
+        if (prod * b <= 2023)
+            prod *= b;
+        else
+            prod = 2024;
     }
     if (2023 % prod)
     {
