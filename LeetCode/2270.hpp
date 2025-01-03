@@ -38,13 +38,16 @@ class Solution
 public:
     int waysToSplitArray(vector<int> &nums)
     {
-        int n = nums.size(), y = 0;
-        vector<int64_t> ps(ALL(nums));
-        for (int i = 1; i < n; i++)
-            ps[i] += ps[i - 1];
-        for (int i = 0; i < n - 1; i++)
-            if (ps[i] >= ps.back() - ps[i])
+        const int n = nums.size();
+        const int64_t sum = accumulate(ALL(nums), INT64_C(0));
+        int64_t ps = 0;
+        int y = 0;
+        for (int i : views::iota(0, n - 1))
+        {
+            ps += nums[i];
+            if (ps >= sum - ps)
                 ++y;
+        }
         return y;
     }
 };
