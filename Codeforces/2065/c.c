@@ -26,27 +26,40 @@
 
 int bwmin(int l, int r) { return r ^ ((l ^ r) & -(l < r)); }
 
+int cmp(const int *const restrict l, const int *const restrict r) { return *l - *r; }
+
+int *lbound(const int *const restrict b, const int m, const int a)
+{
+    int *y = b - 1;
+    for (int jump = m; jump; jump >>= 1)
+        while (y + jump < b + m && *(y + jump) < a)
+            y += jump;
+    return y + 1;
+}
+
 void solve()
 {
     int n, m;
     scanf("%d%d", &n, &m);
-    assert(m == 1);
-    int a[n], b;
+    int a[n], b[m];
     for (int i = 0; i < n; i++)
         scanf("%d", a + i);
-    scanf("%d", &b);
-    *a = bwmin(*a, b - *a);
+    for (int i = 0; i < m; i++)
+        scanf("%d", b + i);
+    qsort(b, m, sizeof(int), cmp);
+    *a = bwmin(*a, *b - *a);
     for (int i = 1; i < n; i++)
     {
-        if (a[i - 1] > a[i] && a[i - 1] > b - a[i])
+        int *ptr = lbound(b, m, a[i - 1] + a[i]);
+        if (a[i - 1] > a[i] && ptr == b + m)
         {
             puts("no");
             return;
         }
         if (a[i - 1] > a[i])
-            a[i] = b - a[i];
-        else if (a[i - 1] <= b - a[i])
-            a[i] = bwmin(a[i], b - a[i]);
+            a[i] = *ptr - a[i];
+        else if (ptr < b + m)
+            a[i] = bwmin(a[i], *ptr - a[i]);
     }
     puts("yes");
 }
