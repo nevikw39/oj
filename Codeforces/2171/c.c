@@ -28,23 +28,26 @@ void solve()
 {
     int n;
     scanf("%d", &n);
-    int a[n], x = -1;
+    int a[n];
     for (int i = 0; i < n; i++)
         scanf("%d", i + a);
-    bool tie = true;
+    int tie = 0, x = -1;
     for (int i = 0, b; i < n; i++)
     {
         scanf("%d", &b);
-        if (i[a] ^ b)
-        {
-            x = i;
-            tie ^= 1;
-        }
+        tie ^= (i[a] ^= b);
     }
-    assert(tie || ~x);
-    if (tie)
+    if (!tie)
+    {
         puts("Tie");
-    else if (x & 1)
+        return;
+    }
+    tie = 31 - __builtin_clz(tie);
+    for (int i = 0; i < n; i++)
+        if (i[a] & 1 << tie)
+            x = i;
+    assert(~x);
+    if (x & 1)
         puts("Mai");
     else
         puts("Ajisai");
