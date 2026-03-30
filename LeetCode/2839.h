@@ -28,3 +28,5 @@ bool canBeEqual(const char *const restrict s1, const char *const restrict s2)
     f(s2, o2, e2);
     return !memcmp(o1, o2, sizeof o1) && !memcmp(e1, e2, sizeof e2);
 }
+
+bool (*const checkStrings)(const char *const, const char *const) = canBeEqual;

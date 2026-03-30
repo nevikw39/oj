@@ -18,5 +18,7 @@ int main()
 {
     assert(canBeEqual("abcd", "cdab") == true);
     assert(canBeEqual("abcd", "dacb") == false);
+    assert(checkStrings("abcdba", "cabdab") == true);
+    assert(checkStrings("abe", "bea") == false);
     return 0;
 }
