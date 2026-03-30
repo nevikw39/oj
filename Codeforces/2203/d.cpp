@@ -42,17 +42,11 @@ void solve()
     std::copy_n(std::istream_iterator<int>(cin), m, y.begin());
     ranges::sort(x);
     const int mx = ranges::max(y);
-    int l = 1, a = 0, b = 0;
+    int l = 1;
     for (int i : x)
-    {
-        l = lcm(l, i);
-        if (l > mx)
+        if ((l = lcm(l, i)) > mx)
             break;
-    }
-    if (l <= mx)
-        for (int i : y)
-            if (!(i % l))
-                ++a;
+    const int a = l <= mx ? ranges::count_if(x, [&](int i) { return !(i % l); }) : 0;
     vector<bool> sieve(mx + 1);
     for (int i : x)
     {
@@ -63,9 +57,7 @@ void solve()
         for (int j = i; j <= mx; j += i)
             sieve[j] = true;
     }
-    for (int i : y)
-        if (!sieve[i])
-            ++b;
+    const int b = ranges::count_if(x, [&](int i) { return !sieve[i]; });
     if (a + ((m - a - b) & 1) > b)
         println("Alice");
     else
