@@ -36,11 +36,11 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 class Solution
 {
 public:
-    vector<long long> getDistances(vector<int> &arr)
+    vector<long long> getDistances(const vector<int> &arr)
     {
-        int n = arr.size();
+        const int n = arr.size();
         _hash<int, vector<long long>> ht, ps;
-        for (int i = 0; i < n; i++)
+        for (int i : views::iota(0, n))
         {
             ht[arr[i]].push_back(i);
             if (ps[arr[i]].empty())
@@ -49,12 +49,15 @@ public:
                 ps[arr[i]].push_back(ps[arr[i]].back() + i);
         }
         vector<long long> intervals(n);
-        for (int i = 0; i < n; i++)
+        for (int i : views::iota(0, n))
         {
-            auto l = lower_bound(ALL(ht[arr[i]]), i) - ht[arr[i]].begin(), u = upper_bound(ALL(ht[arr[i]]), i) - ht[arr[i]].begin();
-            cerr << '\t' << ps[arr[i]][l] << ' ' << ps[arr[i]].back() - ps[arr[i]][u - 1] << ' ' << l + 1 << ' ' << ht[arr[i]].size() - u << '\n';
+            const auto l = ranges::lower_bound(ht[arr[i]], i) - ht[arr[i]].begin(), u = ranges::upper_bound(ht[arr[i]], i) - ht[arr[i]].begin();
+            // cerr << '\t' << ps[arr[i]][l] << ' ' << ps[arr[i]].back() - ps[arr[i]][u - 1] << ' ' << l + 1 << ' ' << ht[arr[i]].size() - u << '\n';
             intervals[i] = -ps[arr[i]][l] + (l + 1 - ht[arr[i]].size() + u) * i + ps[arr[i]].back() - ps[arr[i]][u - 1];
         }
         return intervals;
     }
+
+    template <typename... Args>
+    auto distance(Args &&...args) { return getDistances(forward<Args>(args)...); }
 };
