@@ -24,6 +24,16 @@
 #endif
 #pragma message("GL; HF!")
 
+static inline void shuffle(int *const restrict arr, int n)
+{
+    for (int i = n - 1; i; i--)
+    {
+        const int j = rand() % (i + 1), tmp = j[arr];
+        j[arr] = i[arr];
+        i[arr] = tmp;
+    }
+}
+
 int cmp(const void *const restrict lhs, const void *const restrict rhs)
 {
     const int l = *(const int *const)lhs, r = *(const int *const)rhs;
@@ -39,6 +49,7 @@ void solve()
     int a[n];
     for (int i = 0; i < n; i++)
         scanf("%d", a + i);
+    shuffle(a);
     qsort(a, n, sizeof(int), cmp);
     for (int *ptr = a; ptr < a + n; ptr++)
         printf("%d ", *ptr);
