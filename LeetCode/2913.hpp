@@ -35,6 +35,8 @@ using _tree = tree<K, M, Cmp, T, tree_order_statistics_node_update>;
 
 class Solution
 {
+    static constexpr int MOD = 1e9 + 7;
+
     struct bit
     {
         int n;
@@ -47,14 +49,14 @@ class Solution
         {
             int y = 0;
             for (; x; x -= lowbit(x))
-                y += v[x];
+                (y += v[x]) %= MOD;
             return y;
         }
 
         void update(int x, int val = 1)
         {
             for (; x <= n; x += lowbit(x))
-                v[x] += val;
+                (v[x] += val) %= MOD;
         }
     };
 
@@ -67,8 +69,8 @@ public:
         int y = 0, sum = 0;
         for (int r : views::iota(0, n))
         {
-            const int l = hm[nums[r]], prv = (ft_a.query(r + 1) * (r + 1) - ft_b.query(r + 1)) - (ft_a.query(l) * l - ft_b.query(l));
-            y += sum += (prv << 1) + (r - l + 1);
+            const int l = hm[nums[r]], prv = (ft_a.query(r + 1) * (r + 1LL) - ft_b.query(r + 1)) - (ft_a.query(l) * (l + 0LL) - ft_b.query(l));
+            (y += (sum += ((prv << 1) % MOD + (r - l + 1)) % MOD) %= MOD) %= MOD;
             ft_a.update(l + 1);
             ft_a.update(r + 2, -1);
             ft_b.update(l + 1, l);
